@@ -1,0 +1,56 @@
+/* Styling Mixins*/
+
+/* Text */
+
+@mixin text-styling(
+  $color: var(--neutral-000),
+  $font-size: var(--font-preset-3-size),
+  $font-weight: var(--font-weight-medium),
+  $letter-spacing: var(--letter-spacing-standard)
+) {
+  color: $color;
+  font-size: $font-size;
+  font-weight: $font-weight;
+  letter-spacing: $letter-spacing;
+  line-height: var(--line-height-primary);
+  transition: 1s ease;
+}
+
+/* Buttons */
+
+@mixin button-styling {
+  color: var(--neutral-000);
+  background-color: var(--blue-500);
+  font-family: var(--primary-font);
+  letter-spacing: var(--letter-spacing-standard);
+  font-weight: var(--font-weight-medium);
+  padding: 1rem 2rem;
+  border: none;
+
+  &:hover {
+    background-color: var(--blue-700);
+  }
+
+  &:focus {
+    border: 2px solid var(--blue-500);
+  }
+}
+
+/* Responsiveness mixins */
+@mixin for-desktop-up {
+  @media (max-width: vars.$bp-desktop) {
+    @content;
+  }
+}
+
+@mixin for-tablet-up {
+  @media (max-width: vars.$bp-tablet) {
+    @content;
+  }
+}
+
+@mixin for-mobile-up {
+  @media (max-width: vars.$bp-mobile) {
+    @content;
+  }
+}

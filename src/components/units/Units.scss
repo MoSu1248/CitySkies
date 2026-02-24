@@ -1,0 +1,38 @@
+@use "../../styles/mixins" as *;
+
+.unit__container {
+  position: relative;
+
+  .unit__btn {
+    background-color: var(--neutral-700);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    border-radius: 8px;
+    height: 100%;
+    width: 100%;
+    padding: 1rem;
+    color: var(--neutral-000);
+    gap: 1rem;
+    @include text-styling(var(--neutral-000), var(--font-preset-6-size));
+    cursor: pointer;
+    line-height: 1.2;
+  }
+
+  .unit__dropdownContainer {
+    padding: 0.5rem 0;
+    position: absolute;
+    top: 100%; // place right below the button
+    right: 0;
+  }
+
+  .unit__dropdown {
+    height: 20rem;
+    width: 13.3rem;
+    background-color: var(--neutral-800);
+    border-radius: 12px;
+    border: 1px solid var(--neutral-600);
+    z-index: 10; // ensure it’s above other elements
+  }
+}
