@@ -4,7 +4,7 @@
   position: relative;
 
   .unit__btn {
-    background-color: var(--neutral-700);
+    background-color: var(--neutral-800);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -12,7 +12,7 @@
     border-radius: 8px;
     height: 100%;
     width: 100%;
-    padding: 1rem;
+    padding: 0.8rem 1rem;
     color: var(--neutral-000);
     gap: 1rem;
     @include text-styling(var(--neutral-000), var(--font-preset-6-size));
@@ -23,7 +23,7 @@
   .unit__dropdownContainer {
     padding: 0.5rem 0;
     position: absolute;
-    top: 100%; // place right below the button
+    top: 100%;
     right: 0;
   }
 
@@ -33,6 +33,6 @@
     background-color: var(--neutral-800);
     border-radius: 12px;
     border: 1px solid var(--neutral-600);
-    z-index: 10; // ensure it’s above other elements
+    z-index: 10;
   }
 }
