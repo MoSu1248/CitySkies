@@ -25,11 +25,29 @@
       grid-column: 1 / span 7;
     }
 
-    div {
-      width: 100%;
+    .daily__card {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      justify-content: space-between;
+      padding: 1rem 0.6rem;
       background-color: var(--neutral-800);
-      border-radius: 12px;
       border: 1px solid var(--neutral-600);
+      width: 100%;
+      border-radius: 12px;
+
+      img{
+        margin: auto;
+      }
+      
+      h4 {
+        text-align: center;
+      }
+
+      &-temps {
+        display: flex;
+        justify-content: space-between;
+      }
     }
   }
 
@@ -73,6 +91,22 @@
         background-color: var(--neutral-700);
         border-radius: 8px;
         border: 1px solid var(--neutral-600);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.5rem;
+
+        span {
+          gap: 0.5rem;
+          display: flex;
+          align-items: center;
+          text-align: center;
+        }
+
+        img {
+          height: 3rem;
+          width: 3rem;
+        }
       }
     }
 
@@ -94,7 +128,6 @@
   }
 }
 
-
-.weather-icon{
+.weather-icon {
   width: 5rem;
 }

@@ -24,7 +24,6 @@ type DailyUnits = {
   precipitation_sum: string;
   temperature_2m_max: string;
   temperature_2m_min: string;
-  time: string;
 };
 
 type WeatherData = {
@@ -36,6 +35,47 @@ type WeatherData = {
   timezone_abbreviation: string;
   daily: Daily;
   daily_units: DailyUnits;
+  hourly: Hourly;
+  hourly_units: HourlyUnits;
+  current_units: CurrentUnits;
+  current: Current;
+};
+
+type Hourly = {
+  time: string[];
+  temperature_2m: number[];
+  weathercode: number[];
+};
+type HourlyUnits = {
+  time: string;
+  temperature_2m_min: string;
+};
+
+type Current = {
+  apparent_temperature: number;
+  interval: number;
+  precipitation: number;
+  temperature_2m: number;
+  time: string;
+  weathercode: number;
+  wind_speed_10m: number;
+  relative_humidity_2m: number;
+};
+
+type CurrentUnits = {
+  apparent_temperature: string;
+  interval: number;
+  precipitation: string;
+  temperature_2m: string;
+  time: string;
+  weathercode: string;
+  wind_speed_10m: string;
+};
+
+type MappedHourly = {
+  hour: string;
+  temp: number;
+  icon: JSX.Element;
 };
 
 type MappedDaily = {
@@ -52,7 +92,13 @@ export default function Home() {
   useEffect(() => {
     const fetchRawWeather = async () => {
       const res = await fetch(
-        `https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.419&daily=temperature_2m_max,temperature_2m_min,precipitation_sum,weathercode`,
+        `https://api.open-meteo.com/v1/forecast?
+latitude=52.52
+&longitude=13.419
+&daily=temperature_2m_max,temperature_2m_min,precipitation_sum,weathercode
+&hourly=temperature_2m,weathercode
+&forecast_days=7
+&forecast_hours=7&current=temperature_2m,precipitation,weathercode,wind_speed_10m,apparent_temperature,relative_humidity_2m`,
       );
       const data = await res.json();
       console.log(data);
@@ -80,7 +126,6 @@ export default function Home() {
           />
         );
       case code === 3:
-        
         return (
           <img src={overcastImg} alt="Overcast" className="weather-icon" />
         );
@@ -145,8 +190,23 @@ export default function Home() {
       return {
         day: date.toLocaleDateString("en-US", { weekday: "short" }),
         date: dateStr,
-        maxTemp: datas.daily.temperature_2m_max[i],
-        minTemp: datas.daily.temperature_2m_min[i],
+        maxTemp: Math.round(datas.daily.temperature_2m_max[i]),
+        minTemp: Math.round(datas.daily.temperature_2m_min[i]),
+        icon: getWeatherIcon(code),
+      };
+    },
+  );
+
+  const hourlyData: MappedHourly[] | undefined = datas?.hourly.time.map(
+    (hourStr, index) => {
+      const date = new Date(hourStr);
+      const code = datas?.hourly.weathercode[index];
+
+      return {
+        hour: date.toLocaleTimeString("en-US", {
+          hour: "numeric",
+        }),
+        temp: Math.round(datas.hourly.temperature_2m[index]),
         icon: getWeatherIcon(code),
       };
     },
@@ -154,22 +214,49 @@ export default function Home() {
 
   return (
     <div className="metric">
-      <div className="block-1"></div>
+      <div className="block-1">
+        <span>{datas?.current.time}</span>
+        <span>{getWeatherIcon(datas?.current.weathercode)}</span>
+        <span>
+          {datas?.current.temperature_2m} {datas?.current_units.temperature_2m}
+        </span>
+      </div>
       <div className="block-2">
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
+        <div>
+          <p>Feels Like</p>
+          <span>
+            {datas?.current.apparent_temperature}
+            {datas?.current_units.temperature_2m}
+          </span>
+        </div>
+        <div>
+          <p>Humidity</p> <span>{datas?.current.apparent_temperature}%</span>
+        </div>
+        <div>
+          <p>Wind</p>
+          <span>
+            {datas?.current.apparent_temperature}
+            {datas?.current_units.wind_speed_10m}
+          </span>
+        </div>
+        <div>
+          <p>Precipitation</p>
+          <span>
+            {datas?.current.apparent_temperature}
+            {datas?.current_units.precipitation}
+          </span>
+        </div>
       </div>
       <div className="block-3">
-        {}
         <h3>Daily forecast</h3>
         {dailyData?.map((dayWeather) => (
-          <div className="daily-card p-4 bg-gray-100 rounded shadow">
-            <h3 className="font-bold">{dayWeather.day}</h3>
-            <p>{dayWeather.maxTemp}</p>
-            <p>{dayWeather.minTemp}</p>
+          <div className="daily__card" key={dayWeather.day}>
+            <h4 className="font-bold">{dayWeather.day}</h4>
             {dayWeather.icon}
+            <div className="daily__card-temps">
+              <p>{dayWeather.maxTemp}°</p>
+              <p>{dayWeather.minTemp}°</p>
+            </div>
           </div>
         ))}
       </div>
@@ -181,13 +268,14 @@ export default function Home() {
           </button>
         </div>
         <ul>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
+          {hourlyData?.map((hourlyWeather) => (
+            <li>
+              <span>
+                {hourlyWeather.icon} {hourlyWeather.hour}
+              </span>
+              <span>{hourlyWeather.temp}°</span>
+            </li>
+          ))}
         </ul>
       </div>
     </div>
