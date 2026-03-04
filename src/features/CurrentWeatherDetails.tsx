@@ -1,34 +1,44 @@
 import type { WeatherData } from "../types/weather";
+import { useSettingStore } from "../stores/useSettingsStore";
 
 type Props = {
   data: WeatherData;
 };
 
-export default function CurrentWeatherDetails({ data}: Props) {
+export default function CurrentWeatherDetails({ data }: Props) {
+  const {
+    tempUnit,
+    getTempUnit,
+    getWindUnit,
+    speedUnit,
+    precipUnit,
+    getPrecipUnit,
+  } = useSettingStore();
+
   return (
     <div className="block-2">
       <div>
-        <p>Feels Like</p>
+        <h3>Feels Like</h3>
         <span>
-          {data?.current.apparent_temperature}
-          {data?.current_units.temperature_2m}
+          {getTempUnit(data?.current.apparent_temperature, tempUnit)}°
+          {tempUnit}
         </span>
       </div>
       <div>
-        <p>Humidity</p> <span>{data?.current.apparent_temperature}%</span>
+        <h3>Humidity</h3> <span>{data?.current.apparent_temperature}%</span>
       </div>
       <div>
-        <p>Wind</p>
+        <h3>Wind</h3>
         <span>
-          {data?.current.apparent_temperature}
-          {data?.current_units.wind_speed_10m}
+          {getWindUnit(data?.current.apparent_temperature, speedUnit)}
+          {speedUnit}
         </span>
       </div>
       <div>
-        <p>Precipitation</p>
+        <h3>Precipitation</h3>
         <span>
-          {data?.current.apparent_temperature}
-          {data?.current_units.precipitation}
+          {getPrecipUnit(data?.current.apparent_temperature, precipUnit)}
+          {precipUnit}
         </span>
       </div>
     </div>

@@ -1,5 +1,6 @@
-import React, { type JSX } from "react";
+import React, { useEffect, type JSX } from "react";
 import type { WeatherData } from "../types/weather";
+import { useSettingStore } from "../stores/useSettingsStore";
 
 type MappedDaily = {
   day: string;
@@ -15,6 +16,8 @@ type Props = {
 };
 
 export default function DailyWeather({ data, getWeatherIcon }: Props) {
+  const { tempUnit, getTempUnit } = useSettingStore();
+
   const dailyData: MappedDaily[] | undefined = data?.daily.time.map(
     (dateStr, i) => {
       const date = new Date(dateStr);
@@ -22,8 +25,8 @@ export default function DailyWeather({ data, getWeatherIcon }: Props) {
       return {
         day: date.toLocaleDateString("en-US", { weekday: "short" }),
         date: dateStr,
-        maxTemp: Math.round(data.daily.temperature_2m_max[i]),
-        minTemp: Math.round(data.daily.temperature_2m_min[i]),
+        maxTemp: getTempUnit(data.daily.temperature_2m_max[i], tempUnit),
+        minTemp: getTempUnit(data.daily.temperature_2m_min[i], tempUnit),
         icon: getWeatherIcon(code),
       };
     },

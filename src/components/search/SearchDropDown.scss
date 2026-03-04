@@ -1,0 +1,31 @@
+@use "../../styles/mixins" as *;
+
+.search__dropdown {
+  position: absolute;
+  top: 100%;
+  margin-top: 0.5rem;
+  border-radius: 8px;
+  background-color: var(--neutral-800);
+  width: 80%;
+  padding: 1rem;
+  border: 1px solid var(--neutral-700);
+  ul {
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    gap: 0.5rem;
+    li {
+      border: 1px solid transparent;
+      padding: 0.7rem 0.5rem;
+      cursor: pointer;
+      @include text-styling(var(--neutral-200), var(--font-preset-5-size));
+      transition: 0.3s ease;
+    }
+
+    li:hover {
+      border-radius: 8px;
+      border: 1px solid var(--neutral-600);
+      background-color: var(--neutral-700);
+    }
+  }
+}

@@ -8,13 +8,6 @@
   height: 70vh;
   gap: 2rem;
 
-  .block-1 {
-    border-radius: 20px;
-    background-image: url("../assets/images/bg-today-large.svg");
-    background-size: cover;
-    background-repeat: no-repeat;
-  }
-
   .block-3 {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
@@ -36,10 +29,10 @@
       width: 100%;
       border-radius: 12px;
 
-      img{
+      img {
         margin: auto;
       }
-      
+
       h4 {
         text-align: center;
       }
@@ -121,12 +114,13 @@
       color: var(--neutral-000);
       gap: 1rem;
       @include text-styling(var(--neutral-000), var(--font-preset-6-size));
-      cursor: pointer;
       line-height: 1.2;
       font-family: var(--primary-font);
     }
   }
 }
+
+
 
 .weather-icon {
   width: 5rem;

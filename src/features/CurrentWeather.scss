@@ -1,0 +1,61 @@
+@use "../styles/mixins" as *;
+
+.current {
+  border-radius: 20px;
+  background-image: url("../assets/images/bg-today-large.svg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  padding: 2rem;
+
+  &__container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+
+    .text__container {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      &-header {
+        @include text-styling(var(--neutral-000), var(--font-preset-3-size));
+      }
+    }
+
+    .weather__container {
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+
+      &-text {
+        @include text-styling(var(--neutral-000), var(--font-preset-1-size));
+        font-weight: var(--font-weight-semiBold);
+      }
+    }
+  }
+}
+
+.block-2 {
+  display: flex;
+  gap: 1rem;
+
+  div {
+    width: 100%;
+    background-color: var(--neutral-800);
+    border-radius: 12px;
+    border: 1px solid var(--neutral-600);
+    padding: 1.5rem 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    h3 {
+      @include text-styling(var(--neutral-200), var(--font-preset-5-size));
+      font-weight: var(--font-weight-medium);
+    }
+    span {
+      @include text-styling(var(--neutral-000), var(--font-preset-3-size));
+      font-weight: var(--font-weight-light);
+    }
+  }
+}

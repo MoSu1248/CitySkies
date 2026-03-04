@@ -1,6 +1,6 @@
 import React, { type JSX } from "react";
 import type { WeatherData } from "../types/weather";
-import DropDownIcon from "../assets/images/icon-dropdown.svg?react";
+import { useSettingStore } from "../stores/useSettingsStore";
 
 type MappedHourly = {
   hour: string;
@@ -14,6 +14,8 @@ type Props = {
 };
 
 export default function hourlyWeather({ data, getWeatherIcon }: Props) {
+  const { tempUnit, getTempUnit } = useSettingStore();
+
   const hourlyData: MappedHourly[] | undefined = data?.hourly.time.map(
     (hourStr, index) => {
       const date = new Date(hourStr);
@@ -34,7 +36,7 @@ export default function hourlyWeather({ data, getWeatherIcon }: Props) {
       <div className="Hourly__header">
         <h3>Hourly forecast</h3>{" "}
         <button>
-          Tuesday <DropDownIcon />
+          Tuesday 
         </button>
       </div>
       <ul>
@@ -43,7 +45,7 @@ export default function hourlyWeather({ data, getWeatherIcon }: Props) {
             <span>
               {hourlyWeather.icon} {hourlyWeather.hour}
             </span>
-            <span>{hourlyWeather.temp}°</span>
+            <span>{getTempUnit(hourlyWeather.temp, tempUnit)}°</span>
           </li>
         ))}
       </ul>

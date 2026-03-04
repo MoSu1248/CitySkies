@@ -1,5 +1,9 @@
 import React from "react";
 
-export default function SearchBtn() {
-  return <button className="search__btn">Search</button>;
+type Props = {
+  fetchWeather: () => void;
+};
+
+export default function SearchBtn({ fetchWeather }: Props) {
+  return <button className="search__btn" onClick={()=> fetchWeather()}>Search</button>;
 }

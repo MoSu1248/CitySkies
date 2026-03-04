@@ -6,19 +6,22 @@ type WeatherStore = {
   loading: boolean;
   error: string | null;
   fetchWeather: () => Promise<void>;
-  getTemperatureAt: (time: string) => number | null;
+  setLocation: (newUnit: string) => void;
+  location: string;
 };
 
-export const useWeatherStore = create<WeatherStore>((set, get) => ({
+export const useWeatherStore = create<WeatherStore>((set) => ({
   data: null,
   loading: false,
   error: null,
+  location: "Berlin, Germany",
+  setLocation: (newUnit) => set({ location: newUnit }),
 
-  fetchWeather: async () => {
+  fetchWeather: async (lat: number, lon: number) => {
     set({ loading: true, error: null });
     try {
       const res = await fetch(
-        `https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.419&daily=temperature_2m_max,temperature_2m_min,precipitation_sum,weathercode&hourly=temperature_2m,weathercode&forecast_days=7&forecast_hours=7&current=temperature_2m,precipitation,weathercode,wind_speed_10m,apparent_temperature,relative_humidity_2m`,
+        `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=temperature_2m_max,temperature_2m_min,precipitation_sum,weathercode&hourly=temperature_2m,weathercode&forecast_days=7&forecast_hours=7&current=temperature_2m,precipitation,weathercode,wind_speed_10m,apparent_temperature,relative_humidity_2m`,
       );
 
       if (!res.ok) throw new Error("Failed to fetch weather data");
@@ -35,15 +38,5 @@ export const useWeatherStore = create<WeatherStore>((set, get) => ({
     } finally {
       set({ loading: false });
     }
-  },
-
-  getTemperatureAt: (time) => {
-    const data = get().data;
-    if (!data) return null;
-
-    const index = data.hourly.time.findIndex((t) => t === time);
-    if (index === -1) return null;
-
-    return data.hourly.temperature_2m[index];
   },
 }));

@@ -11,7 +11,7 @@ export default function Home() {
   const { data, loading, error, fetchWeather } = useWeatherStore();
 
   useEffect(() => {
-    fetchWeather();
+    fetchWeather(52.52437, 13.41053);
   }, []);
 
   return (
