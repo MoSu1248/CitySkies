@@ -1,3 +1,5 @@
+@use "../../styles/mixins" as *;
+
 .layout__wrapper {
   display: flex;
   flex-direction: column;
@@ -8,4 +10,13 @@
   margin: auto;
   padding: 2rem 2rem 0rem 2rem;
   max-width: 1440px;
+
+  @include for-tablet-up {
+    width: 100%;
+    padding: 2rem;
+  }
+
+  @include for-mobile-up {
+    padding: 2rem .5rem;
+  }
 }

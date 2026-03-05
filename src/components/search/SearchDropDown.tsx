@@ -17,20 +17,22 @@ type Result = {
 type Props = {
   fields: Result;
   loading: boolean;
+  setOpen: (input: boolean) => boolean;
 };
 
-export default function SearchDropDown({ fields, loading }: Props) {
+export default function SearchDropDown({ fields, loading, setOpen }: Props) {
   const { fetchWeather, setLocation } = useWeatherStore();
 
   function onClick(lat: number, lon: number, name: string, country: string) {
     fetchWeather(lat, lon);
-    setLocation(name + `,` + country);
+    setLocation(name + `, ` + " " + country);
+    setOpen(false);
   }
 
   return (
-    <div className="search__dropdown">
+    <div className="search__dropdown" onMouseLeave={() => setOpen(false)}>
       {loading === true ? (
-        <p>
+        <p className="search__loading">
           <Loading /> Search in progress
         </p>
       ) : (
@@ -43,6 +45,7 @@ export default function SearchDropDown({ fields, loading }: Props) {
               key={index}
             >
               {item.name}
+              <span>{item.country}</span>
             </li>
           ))}
         </ul>

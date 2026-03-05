@@ -14,12 +14,21 @@ export default function CurrentWeather({ data, getWeatherIcon }: Props) {
   const currentTemp = getTempUnit(data?.current.temperature_2m, tempUnit);
   const { location } = useWeatherStore();
 
+  const date = new Date(data?.current.time);
+
+  const formatted = date.toLocaleDateString("en-US", {
+    weekday: "long",
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
+
   return (
     <div className="current">
       <div className="current__container">
         <div className="text__container">
           <h3 className="text__container-header">{location}</h3>
-          <p>{data?.current.time}</p>
+          <p>{formatted}</p>
         </div>
         <div className="weather__container">
           <span>{getWeatherIcon(data?.current.weathercode)}</span>

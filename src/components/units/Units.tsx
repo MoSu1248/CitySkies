@@ -12,7 +12,7 @@ export default function Units() {
       onMouseEnter={() => setVisible(true)}
       onMouseLeave={() => setVisible(false)}
     >
-      <UnitBtn setVisible={setVisible} />
+      <UnitBtn setVisible={setVisible} visible={visible} />
       <UnitDropDown visible={visible} />
     </div>
   );

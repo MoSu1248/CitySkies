@@ -7,11 +7,21 @@
   background-repeat: no-repeat;
   padding: 2rem;
 
+  @include for-mobile-up {
+    padding: 2rem;
+  }
+
   &__container {
     display: flex;
     justify-content: space-between;
     align-items: center;
     height: 100%;
+
+    @include for-mobile-up {
+      flex-direction: column;
+      gap: 1rem;
+      text-align: center;
+    }
 
     .text__container {
       display: flex;

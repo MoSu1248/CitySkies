@@ -9,7 +9,7 @@ type buttonProps = {
 
 export default function UnitBtn({ setVisible }: buttonProps) {
   return (
-    <button className="unit__btn">
+    <button className="unit__btn" onClick={() => setVisible(prev => !prev)}>
       <GearIcon />
       Units
       <DropDownIcon />

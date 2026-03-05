@@ -34,14 +34,11 @@ export default function hourlyWeather({ data, getWeatherIcon }: Props) {
   return (
     <div className="block-4">
       <div className="Hourly__header">
-        <h3>Hourly forecast</h3>{" "}
-        <button>
-          Tuesday 
-        </button>
+        <h3>Hourly forecast</h3> <button>Tuesday</button>
       </div>
       <ul>
         {hourlyData?.map((hourlyWeather) => (
-          <li>
+          <li key={hourlyWeather.hour}>
             <span>
               {hourlyWeather.icon} {hourlyWeather.hour}
             </span>

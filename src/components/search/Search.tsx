@@ -19,6 +19,7 @@ export default function Search() {
   const [input, setInput] = useState<string>("");
   const [fields, setFields] = useState<Result>();
   const [loading, setLoading] = useState<boolean>(true);
+  const [open, setOpen] = useState<boolean>(false);
 
   async function fetchWeather(): Promise<Result | null> {
     setLoading(true);
@@ -34,7 +35,7 @@ export default function Search() {
       setFields(data);
       setLoading(false);
       console.log(data);
-      
+
       return data;
     } catch (error) {
       console.error("Fetch failed:", error);
@@ -52,8 +53,10 @@ export default function Search() {
   return (
     <form className="search" onSubmit={handleSearch}>
       <SearchInput setInput={setInput} input={input} />
-      <SearchBtn fetchWeather={fetchWeather} />
-      {input && <SearchDropDown fields={fields} loading={loading} />}
+      <SearchBtn fetchWeather={fetchWeather} setOpen={setOpen} />
+      {open && (
+        <SearchDropDown fields={fields} loading={loading} setOpen={setOpen} />
+      )}
     </form>
   );
 }

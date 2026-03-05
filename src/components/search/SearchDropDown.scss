@@ -9,23 +9,46 @@
   width: 80%;
   padding: 1rem;
   border: 1px solid var(--neutral-700);
+
+  @include for-mobile-up {
+    width: 100%;
+  }
+
   ul {
     display: flex;
     flex-direction: column;
     list-style: none;
     gap: 0.5rem;
     li {
+      border-radius: 8px;
+
       border: 1px solid transparent;
       padding: 0.7rem 0.5rem;
       cursor: pointer;
       @include text-styling(var(--neutral-200), var(--font-preset-5-size));
       transition: 0.3s ease;
+
+      span {
+        float: right;
+        @include text-styling(var(--neutral-400), var(--font-preset-6-size));
+      }
     }
 
     li:hover {
-      border-radius: 8px;
       border: 1px solid var(--neutral-600);
       background-color: var(--neutral-700);
+
+      span {
+        color: var(--neutral-300);
+      }
     }
+  }
+
+  .search__loading {
+    text-align: left;
+    @include text-styling(var(--neutral-000), var(--font-preset-5-size));
+    display: flex;
+    gap: 1rem;
+    align-items: center;
   }
 }
